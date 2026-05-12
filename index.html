@@ -4,7 +4,294 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ryan Dampf | Designer</title>
-    <link rel="stylesheet" href="assets/style.css" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #07101b;
+        --surface: rgba(255, 255, 255, 0.06);
+        --surface-strong: rgba(255, 255, 255, 0.1);
+        --text: #f2f7ff;
+        --muted: #9bb4d4;
+        --accent: #7dd3fc;
+        --accent-strong: #5eead4;
+        --border: rgba(255, 255, 255, 0.12);
+        --shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: radial-gradient(circle at top left, rgba(125, 211, 252, 0.18), transparent 30%),
+          radial-gradient(circle at bottom right, rgba(94, 234, 212, 0.14), transparent 20%),
+          var(--bg);
+        color: var(--text);
+      }
+
+      body {
+        line-height: 1.6;
+        font-size: 1rem;
+      }
+
+      .page-shell {
+        width: min(1180px, calc(100% - 3rem));
+        margin: 0 auto;
+        padding: 3rem 0 4rem;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+        gap: 2rem;
+        padding: 3rem;
+        border: 1px solid var(--border);
+        border-radius: 32px;
+        background: rgba(255, 255, 255, 0.03);
+        box-shadow: var(--shadow);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 20% 20%, rgba(125, 211, 252, 0.2), transparent 18%),
+          radial-gradient(circle at 80% 70%, rgba(94, 234, 212, 0.15), transparent 27%);
+        pointer-events: none;
+      }
+
+      .hero-copy,
+      .hero-card {
+        position: relative;
+        z-index: 1;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.24em;
+        font-size: 0.8rem;
+        color: var(--accent-strong);
+      }
+
+      .hero h1 {
+        margin: 0;
+        font-size: clamp(3rem, 5vw, 5rem);
+        line-height: 0.94;
+      }
+
+      .hero p {
+        max-width: 42rem;
+        color: var(--muted);
+        margin: 1.5rem 0 2rem;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem 1.8rem;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 600;
+        color: #07101b;
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+        transition: transform 180ms ease, box-shadow 180ms ease;
+      }
+
+      .button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 16px 30px rgba(30, 143, 205, 0.25);
+      }
+
+      .button-secondary {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .hero-card {
+        padding: 2rem;
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .hero-card__label {
+        color: var(--accent);
+        font-size: 0.95rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+
+      .hero-card h2 {
+        margin: 0;
+        font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+      }
+
+      .hero-card p {
+        margin: 1.2rem 0 0;
+        color: var(--muted);
+      }
+
+      .section {
+        margin-top: 3.5rem;
+      }
+
+      .section-heading span {
+        display: block;
+        color: var(--accent);
+        font-size: 0.9rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        margin-bottom: 0.6rem;
+      }
+
+      .section-heading h2 {
+        margin: 0;
+        font-size: clamp(2rem, 3vw, 3rem);
+      }
+
+      .about p,
+      .contact p {
+        max-width: 70ch;
+        color: var(--muted);
+        margin: 1.2rem 0 0;
+      }
+
+      .feature-grid {
+        display: grid;
+        gap: 1.4rem;
+        margin-top: 2rem;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .feature-grid article,
+      .project-card {
+        padding: 1.6rem;
+        border-radius: 24px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      .feature-grid h3,
+      .project-card h3 {
+        margin: 0 0 0.9rem;
+        font-size: 1.15rem;
+      }
+
+      .feature-grid p,
+      .project-card p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .project-list {
+        display: grid;
+        gap: 1.5rem;
+        margin-top: 2rem;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .project-tag {
+        display: inline-flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        background: rgba(125, 211, 252, 0.12);
+        color: var(--accent);
+      }
+
+      .contact {
+        padding: 2.5rem;
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .weather-card {
+        margin-top: 1.6rem;
+        padding: 2rem;
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      }
+
+      .weather-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+      }
+
+      .weather-icon {
+        font-size: 2.8rem;
+        line-height: 1;
+        margin-bottom: 0.5rem;
+      }
+
+      .weather-summary {
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin-bottom: 0.35rem;
+      }
+
+      .weather-temp {
+        font-size: clamp(2.3rem, 4vw, 3.6rem);
+        font-weight: 700;
+      }
+
+      .weather-note {
+        margin-top: 1.3rem;
+        color: var(--muted);
+        max-width: 70ch;
+      }
+
+      @media (max-width: 900px) {
+        .hero,
+        .feature-grid,
+        .project-list {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          padding: 2rem;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .page-shell {
+          padding: 2rem 0 3rem;
+        }
+
+        .hero {
+          border-radius: 24px;
+        }
+
+        .button {
+          width: fit-content;
+        }
+
+        .weather-row {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="page-shell">
@@ -15,10 +302,22 @@
           <p>Designer focused on elegant branding, expressive digital experiences, and thoughtful storytelling.</p>
           <a class="button" href="#contact">Work together</a>
         </div>
-        <div class="hero-card">
-          <div class="hero-card__label">Featured work</div>
-          <h2>Fresh, minimal design for modern brands.</h2>
-          <p>From identity systems to landing pages, I help businesses look polished, feel warm, and stand out online.</p>
+        <div>
+          <article class="weather-card">
+            <div class="weather-row">
+              <div>
+                <div id="weather-icon" class="weather-icon">☀️</div>
+                <div id="weather-summary" class="weather-summary">Checking your location...</div>
+              </div>
+              <div id="weather-temp" class="weather-temp">--°F</div>
+            </div>
+            <p id="weather-note" class="weather-note">Allow location access to view the current weather.</p>
+          </article>
+          <div class="hero-card" style="margin-top: 1.6rem;">
+            <div class="hero-card__label">Featured work</div>
+            <h2>Fresh, minimal design for modern brands.</h2>
+            <p>From identity systems to landing pages, I help businesses look polished, feel warm, and stand out online.</p>
+          </div>
         </div>
       </header>
 
@@ -79,5 +378,84 @@
         </section>
       </main>
     </div>
+    <script>
+      const weatherSummary = document.getElementById('weather-summary');
+      const weatherIcon = document.getElementById('weather-icon');
+      const weatherTemp = document.getElementById('weather-temp');
+      const weatherNote = document.getElementById('weather-note');
+
+      const weatherConditions = {
+        clear: { emoji: '☀️', label: 'Clear skies' },
+        partlyCloudy: { emoji: '⛅', label: 'Partly cloudy' },
+        cloudy: { emoji: '☁️', label: 'Cloudy' },
+        rain: { emoji: '🌧️', label: 'Rainy' },
+        snow: { emoji: '❄️', label: 'Snowy' },
+        storm: { emoji: '⛈️', label: 'Stormy' },
+        fog: { emoji: '🌫️', label: 'Foggy' },
+      };
+
+      function getCondition(code) {
+        if (code === 0) return weatherConditions.clear;
+        if ([1, 2, 3].includes(code)) return weatherConditions.partlyCloudy;
+        if ([45, 48].includes(code)) return weatherConditions.fog;
+        if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return weatherConditions.rain;
+        if ([71, 73, 75, 77, 85, 86].includes(code)) return weatherConditions.snow;
+        if ([95, 96, 99].includes(code)) return weatherConditions.storm;
+        return weatherConditions.cloudy;
+      }
+
+      function updateWeather({ temperature, weathercode, time, windspeed, winddirection }) {
+        const condition = getCondition(weathercode);
+        weatherIcon.textContent = condition.emoji;
+        weatherSummary.textContent = `${condition.label}, ${windspeed.toFixed(0)} mph breeze`;
+        weatherTemp.textContent = `${Math.round(temperature)}°F`;
+        weatherNote.textContent = `Current at ${new Intl.DateTimeFormat([], { hour: 'numeric', minute: '2-digit' }).format(new Date(time))}.`;
+      }
+
+      function showError(message) {
+        weatherIcon.textContent = '⚠️';
+        weatherSummary.textContent = 'Weather unavailable';
+        weatherTemp.textContent = '--°F';
+        weatherNote.textContent = message;
+      }
+
+      function fetchWeather(latitude, longitude) {
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&temperature_unit=fahrenheit&timezone=auto`;
+
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) throw new Error('Failed to fetch weather');
+            return response.json();
+          })
+          .then((data) => {
+            if (data.current_weather) {
+              updateWeather(data.current_weather);
+            } else {
+              showError('Unable to read current weather from the forecast service.');
+            }
+          })
+          .catch(() => {
+            showError('There was a problem loading the weather. Please refresh to try again.');
+          });
+      }
+
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            fetchWeather(position.coords.latitude, position.coords.longitude);
+          },
+          (error) => {
+            const message =
+              error.code === error.PERMISSION_DENIED
+                ? 'Enable location to see your weather.'
+                : 'Unable to detect your location. Try again or refresh.';
+            showError(message);
+          },
+          { timeout: 10000 }
+        );
+      } else {
+        showError('Geolocation is not supported in this browser.');
+      }
+    </script>
   </body>
 </html>
